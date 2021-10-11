@@ -22,16 +22,18 @@ public class Generics<AnyType extends Comparable<? super AnyType>> implements Co
         return maxNumber;
     }
 
-    public static Generics findMinNumber(Generics<Integer> a, Generics<Integer> b){
+    public static Generics findMinNumber(Generics a, Generics b){
 
-        Generics maxNumber;
+        Generics minNumber = new Generics<>();
 
         if (a.get().compareTo(b.get())<0){
-            maxNumber = a;
+            minNumber = a;
+        } else if (a.get().compareTo(b.get())>0){
+            minNumber = b;
         } else {
-            maxNumber = b;
+            return minNumber;
         }
-        return maxNumber;
+        return minNumber;
     }
 
     public static void main(String[] args) {
@@ -39,8 +41,8 @@ public class Generics<AnyType extends Comparable<? super AnyType>> implements Co
         Generics<Integer> AnyA = new Generics<>();
         Generics<Integer> AnyB = new Generics<>();
 
-        AnyA.set(10);
-        AnyB.set(11);
+        AnyA.set(15);
+        AnyB.set(15);
 
         Generics max = findMaxNumber(AnyA, AnyB);
         System.out.println("The higher number is " + max.get());
