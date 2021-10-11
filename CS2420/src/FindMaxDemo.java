@@ -43,6 +43,6 @@ class FindMaxDemo
         
         System.out.println( findMax( bi1 ) );
         System.out.println( findMax( st1 ) );
-        System.out.println(findMin(st1));
+        System.out.println(findMin(bi1));
     }
 }

@@ -1,4 +1,4 @@
-public class Person
+public class Person implements Comparable<Person>
 {
 	
     /**
@@ -21,12 +21,11 @@ public class Person
 
 
         Person p1 = new Person("John", 28, "10810", "1234");
-        Person p2 = new Person("Jane", 28, "10811", "1235");
+        Person p2 = new Person("Melvin", 28, "10811", "1235");
 
-        String [ ] persArr = {p1.getName(), p2.getName()};
+        Person [ ] persArr = {p2, p1};
 
         System.out.println(findMax(persArr));
-
     	
     }
 	
@@ -74,4 +73,9 @@ public class Person
     private int age;
     private String address;
     private String phone;
+
+    public int compareTo(Person o) {
+
+        return this.getName().compareToIgnoreCase(o.getName());
+    }
 }

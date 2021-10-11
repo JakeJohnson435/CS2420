@@ -1,59 +1,48 @@
-public class Generics<AnyType extends Comparable<? super AnyType>> implements Comparable {
+public class Generics<AnyType extends Comparable<? super AnyType>> {
 
-    private AnyType item;
+    public static <AnyType extends Comparable<? super AnyType>> AnyType findMaxNumber(AnyType a, AnyType b){
 
-    public AnyType get() {
-        return item;
-    }
-
-    public void set(AnyType a){
-        item = a;
-    }
-
-    public static Generics findMaxNumber(Generics<Integer> a, Generics<Integer> b){
-
-        Generics maxNumber;
-
-        if (a.get().compareTo(b.get())>0){
-            maxNumber = a;
+        if (a.compareTo(b)>0){
+            System.out.println(a + " is bigger");
+            return a;
+        } else if (a.compareTo(b)<0){
+            System.out.println(b + " is bigger");
+            return b;
         } else {
-            maxNumber = b;
+            System.out.println("They're the same");
+            return a;
         }
-        return maxNumber;
+
     }
 
-    public static Generics findMinNumber(Generics<Integer> a, Generics<Integer> b){
+    public static <AnyType extends Comparable<? super AnyType>> AnyType findMinNumber(AnyType a, AnyType b){
 
-        Generics maxNumber;
-
-        if (a.get().compareTo(b.get())<0){
-            maxNumber = a;
+        if (a.compareTo(b)<0){
+            System.out.println(a + " is smaller");
+            return a;
+        } else if (a.compareTo(b)>0){
+            System.out.println(b + " is smaller");
+            return b;
         } else {
-            maxNumber = b;
+            System.out.println(("They're the same"));
+            return a;
         }
-        return maxNumber;
     }
 
     public static void main(String[] args) {
 
-        Generics<Integer> AnyA = new Generics<>();
-        Generics<Integer> AnyB = new Generics<>();
+        Integer AnyA = new Integer(7);
+        Integer AnyB = new Integer(5);
+        Integer AnyC = new Integer(10);
+        Integer AnyD = new Integer(11);
+        Integer AnyE = new Integer(7);
+        Integer AnyF = new Integer(7);
 
-        AnyA.set(10);
-        AnyB.set(11);
-
-        Generics max = findMaxNumber(AnyA, AnyB);
-        System.out.println("The higher number is " + max.get());
-
-        Generics min = findMinNumber(AnyA, AnyB);
-        System.out.println("The lower number is " + min.get());
+        findMaxNumber(AnyA, AnyB);
+        findMinNumber(AnyC, AnyD);
+        findMinNumber(AnyE, AnyF);
 
 
     }
 
-
-    @Override
-    public int compareTo(Object o) {
-        return 0;
-    }
 }
