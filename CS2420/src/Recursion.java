@@ -88,6 +88,9 @@ public class Recursion {
 		int startX = -1;
 		int startY = -1;
 
+		int rows = maze.length;
+		int cols = maze[0].length;
+
 		for (int c = 0; c < maze.length; c++){
 			for (int r = 0; r < maze[c].length; r++){
 
@@ -101,7 +104,9 @@ public class Recursion {
 
 		System.out.println("The starting location is: " + startX + ", " + startY);
 
-		mazeTraversal(maze, startX, startY);
+		mazeTraversal(maze, startX, startY, rows, cols);
+
+		printMaze(maze);
 
 		
 		//For sure pass the x and y for the "S" location, and whatever data structure you are using to represent the maze
@@ -128,17 +133,45 @@ public class Recursion {
 	 * on the start, on the end, on a trail already marked...
 	 */
 
-	public static boolean mazeTraversal(String [][] maze, int x, int y){
+	public static boolean mazeTraversal(String [][] maze, int x, int y, int numRows, int numCols){
 		//Note, you should not need any loops.  Your first instinct might be to add them, but ignore that instinct
 		//Loops are for iteration, not recursion
+
+
+		if (x<0 || y<0){
+			return false;
+		}
+
+		if (x>numRows || y>numCols){
+			return false;
+		}
 
 		if (maze[x][y].equalsIgnoreCase("e")){
 			System.out.println("Finished");
 			return true;
 		}
 
-		if (x<0 || y<0){
+		if (maze[x][y].equalsIgnoreCase("s") || maze[x][y].equalsIgnoreCase(".")){
+			boolean foundTheEnd = mazeTraversal(maze, x+1, y, numRows, numCols);
+			if (foundTheEnd){
+				System.out.println("made it here");
+				return true;
+			}
+			foundTheEnd = mazeTraversal(maze, x-1, y, numRows, numCols);
+			if (foundTheEnd){
+				return true;
+			}
+			foundTheEnd = mazeTraversal(maze, x, y+1, numRows, numCols);
+			if (foundTheEnd){
+				return true;
+			}
+			foundTheEnd = mazeTraversal(maze, x, y-1, numRows, numCols);
+			if (foundTheEnd){
+				return true;
+			}
+
 			return false;
+
 		}
 
 		if (maze[x][y].equals("#")){
@@ -147,21 +180,6 @@ public class Recursion {
 
 		if (maze[x][y].equals("?")){
 			return false;
-		}
-
-		if (maze[x][y].equals(".")){
-			if (mazeTraversal(maze, x+1, y)){
-				return true;
-			}
-			if (mazeTraversal(maze, x-1, y)){
-				return true;
-			}
-			if (mazeTraversal(maze, x, y+1)){
-				return true;
-			}
-			if (mazeTraversal(maze, x+1, y-1)){
-				return true;
-			}
 		}
 
 		return false;
