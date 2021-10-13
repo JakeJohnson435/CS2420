@@ -19,9 +19,11 @@ public class Recursion {
 //		solveMaze("Maze4-No_Solution.txt");
 //		solveMaze("Maze5-Larger.txt");
 
-		String[][] maze =readMazeFromFile("CS2420/src/Maze1-easy.txt");
+//		String[][] maze =readMazeFromFile("CS2420/src/Maze1-easy.txt");
 
-		printMaze(maze);
+		File maze = new File("CS2420/src/Maze1-easy.txt");
+
+		solveMaze(maze);
 
 
 
@@ -72,15 +74,35 @@ public class Recursion {
 	}
 	
 	//This method is what the book calls the "driver" method
-	public static void solveMaze(String filename){
+	public static void solveMaze(File filename){
 		//setup all the variables correctly
+
 		System.out.println("Working on maze " + filename);
+
+		String file = filename.toString();
 		
 		
-		String [][] maze = readMazeFromFile(filename);
+		String [][] maze = readMazeFromFile(file);
 		printMaze(maze);
-		System.out.println("The starting location is: ");
-		
+
+		int startX = -1;
+		int startY = -1;
+
+		for (int c = 0; c < maze.length; c++){
+			for (int r = 0; r < maze[c].length; r++){
+
+				if (maze[c][r].equalsIgnoreCase("s")){
+					startX = c;
+					startY = r;
+				}
+
+			}
+		}
+
+		System.out.println("The starting location is: " + startX + ", " + startY);
+
+		mazeTraversal(maze, startX, startY);
+
 		
 		//For sure pass the x and y for the "S" location, and whatever data structure you are using to represent the maze
 //		mazeTraversal(maze);
@@ -110,15 +132,38 @@ public class Recursion {
 		//Note, you should not need any loops.  Your first instinct might be to add them, but ignore that instinct
 		//Loops are for iteration, not recursion
 
+		if (maze[x][y].equalsIgnoreCase("e")){
+			System.out.println("Finished");
+			return true;
+		}
+
 		if (x<0 || y<0){
 			return false;
 		}
 
-		if (maze[x][y].equals('#')){
+		if (maze[x][y].equals("#")){
 			return false;
 		}
 
-		maze[x][y] = "?";
+		if (maze[x][y].equals("?")){
+			return false;
+		}
+
+		if (maze[x][y].equals(".")){
+			if (mazeTraversal(maze, x+1, y)){
+				return true;
+			}
+			if (mazeTraversal(maze, x-1, y)){
+				return true;
+			}
+			if (mazeTraversal(maze, x, y+1)){
+				return true;
+			}
+			if (mazeTraversal(maze, x+1, y-1)){
+				return true;
+			}
+		}
+
 		return false;
 	}
 
